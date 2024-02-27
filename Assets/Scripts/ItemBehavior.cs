@@ -40,6 +40,21 @@ public class ItemBehavior : MonoBehaviour
                 player.GetComponent<PlayerInventory>().atkSpeedItem++;
                 Destroy(item);
             }
+            else if (x.StartsWith("DefItem"))
+            {
+                player.GetComponent<PlayerInventory>().defItem++;
+                Destroy(item);
+            }
+            else if (x.StartsWith("ATKitem"))
+            {
+                player.GetComponent<PlayerInventory>().atkItem++;
+                Destroy(item);
+            }
+            else if (x.StartsWith("HPitem"))
+            {
+                player.GetComponent<PlayerInventory>().hpItem++;
+                Destroy(item);
+            }
 
 
         }

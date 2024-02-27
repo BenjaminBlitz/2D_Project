@@ -193,8 +193,11 @@ MonoBehaviour:
   normalItems:
   - {fileID: 7996067525080452920, guid: de8dc9b4ec04fc14da74e34cff7099b1, type: 3}
   - {fileID: 2937272790670222324, guid: b76ee6b82ff579d47a2322e63c89fccd, type: 3}
+  - {fileID: 7996067525080452920, guid: 09a5688f18593614f82bfeb8f5c46986, type: 3}
+  - {fileID: 7996067525080452920, guid: 74df192441804834d92f904ababd7df9, type: 3}
   rareItems:
   - {fileID: 5834258506691001312, guid: 545b34a852dbc264e888f32d145ffdb2, type: 3}
+  - {fileID: 5834258506691001312, guid: 9834ebb36e55a6a4eb538174962a9719, type: 3}
 --- !u!114 &429263671906411503
 MonoBehaviour:
   m_ObjectHideFlags: 0

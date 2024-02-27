@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -8,10 +10,14 @@ public class PlayerInventory : MonoBehaviour
 
     public HealthBar healthBar;
     public PlayerMovement player;
+    public Text hpText;
 
     public int bootsSpeed;
     public int jumpWings;
     public int atkSpeedItem;
+    public int defItem;
+    public int atkItem;
+    public int hpItem;
 
 
     [Header("Stats")]
@@ -32,11 +38,13 @@ public class PlayerInventory : MonoBehaviour
     void Update()
     {
         
-        
+        hpText.text ="HP : " + playerCurrentHP.ToString() + " / " + playerHPMax.ToString();
         
         player.myAnimation.SetFloat("AttackSpeed",1+(0.1f*atkSpeedItem));
 
-
+        playerDef = 5*defItem;
+        playerAtk = 10 + (atkItem * 5);
+        playerHPMax = 100 + (10*hpItem);
 
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -56,9 +64,9 @@ public class PlayerInventory : MonoBehaviour
 
 
 
-    public void GetDamaged()
+    public void GetDamaged(float enemyDmg)
     {
-        playerCurrentHP -= 10;
+        playerCurrentHP -= enemyDmg-playerDef;
         healthBar.UpdateHealthBar(playerCurrentHP, playerHPMax);
     }
 

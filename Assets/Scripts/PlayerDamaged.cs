@@ -21,7 +21,7 @@ public class PlayerDamaged : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            playerStats.GetDamaged();
+            playerStats.GetDamaged(collision.gameObject.GetComponent<EnemyBehavior>().enemyDamage);
         }
     }
 
