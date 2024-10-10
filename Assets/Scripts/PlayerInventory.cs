@@ -13,15 +13,18 @@ public class PlayerInventory : MonoBehaviour
     public Text hpText;
 
     public int bootsSpeed;
-    public int jumpWings;
+    public int jumpItem;
     public int atkSpeedItem;
     public int defItem;
     public int atkItem;
     public int hpItem;
+    public int critItem;
+    public int doubleHPItem;
+    public int critHealItem;
 
 
     [Header("Stats")]
-    public float playerSpeed, playerJumpForce,playerCurrentHP, playerHPMax, playerDef, playerAtk, playerAtkSpeed;
+    public float playerSpeed, playerJumpForce,playerCurrentHP, playerHPMax, playerDef, playerAtk, playerAtkSpeed, playerCrit, lifeStealItem, doubleDropItem, jetPackItem;
 
 
     // Start is called before the first frame update
@@ -42,10 +45,12 @@ public class PlayerInventory : MonoBehaviour
         
         player.myAnimation.SetFloat("AttackSpeed",1+(0.1f*atkSpeedItem));
 
+
+        playerJumpForce = 10 + (0.2f * jumpItem);
         playerDef = 5*defItem;
         playerAtk = 10 + (atkItem * 5);
-        playerHPMax = 100 + (10*hpItem);
-
+        playerHPMax = (100 + (10*hpItem)) * (1+doubleHPItem);
+        playerCrit = 0 + (10*critItem);
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -55,10 +60,10 @@ public class PlayerInventory : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            jumpWings++;
+            jumpItem++;
             print(playerJumpForce);
         }
-
+        
 
     }
 
@@ -71,23 +76,62 @@ public class PlayerInventory : MonoBehaviour
     }
 
 
-    /*
-        private void OnCollisionEnter2D(Collision2D collision)
+    public void LifeSteal(bool crit)
+    {
+        if (crit)
         {
-
-            if (gameObject.GetComponentInChildren<Collider2D>().GetType() == typeof(CapsuleCollider2D)){
-                if (collision.gameObject.CompareTag("Enemy"))
+            if (playerCurrentHP < playerHPMax)
+            {
+                if (playerCurrentHP + lifeStealItem + (critHealItem * 5) > playerHPMax)
                 {
-                    playerCurrentHP -= 10;
+                    playerCurrentHP = playerHPMax;
                     healthBar.UpdateHealthBar(playerCurrentHP, playerHPMax);
                 }
+                else
+                {
+                    playerCurrentHP += lifeStealItem;
+                    playerCurrentHP += critHealItem * 5;
+                    healthBar.UpdateHealthBar(playerCurrentHP, playerHPMax);
+                }
+
             }
-
-
         }
+        else
+        {
+            if (playerCurrentHP < playerHPMax)
+            {
+                if (playerCurrentHP + lifeStealItem > playerHPMax)
+                {
+                    playerCurrentHP = playerHPMax;
+                    healthBar.UpdateHealthBar(playerCurrentHP, playerHPMax);
+                }
+                else
+                {
+                    playerCurrentHP += lifeStealItem;
+                    healthBar.UpdateHealthBar(playerCurrentHP, playerHPMax);
+                }
 
-        *
-        */
+            }
+        }
+    }
+
+    public void HpUp(int value)
+    {
+        if (value == 1)
+        {
+            hpItem++;
+            playerHPMax = (100 + (10 * hpItem)) * (1 + doubleHPItem);
+            playerCurrentHP += 10;
+            healthBar.UpdateHealthBar(playerCurrentHP, playerHPMax);
+        }
+        if (value == 2){
+            doubleHPItem++;
+            playerHPMax = (100 + (10 * hpItem)) * (1 + doubleHPItem);
+            playerCurrentHP =playerHPMax;
+            healthBar.UpdateHealthBar(playerCurrentHP, playerHPMax);
+        }
+    }
+
 
 
 }

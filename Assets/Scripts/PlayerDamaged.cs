@@ -6,6 +6,7 @@ public class PlayerDamaged : MonoBehaviour
 {
 
     public PlayerInventory playerStats;
+    public PlayerMovement playerMovement;
 
 
 
@@ -13,19 +14,20 @@ public class PlayerDamaged : MonoBehaviour
     void Start()
     {
         playerStats=transform.parent.GetComponent<PlayerInventory>();
+        playerMovement=transform.parent.GetComponent<PlayerMovement>();
     }
 
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !playerMovement.isDashing)
         {
             playerStats.GetDamaged(collision.gameObject.GetComponent<EnemyBehavior>().enemyDamage);
         }
     }
 
-
+    
     // Update is called once per frame
     void Update()
     {

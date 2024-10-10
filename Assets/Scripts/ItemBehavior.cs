@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemBehavior : MonoBehaviour
 {
+    public PlayerInventory playerInventory;
 
     // Start is called before the first frame update
     void Start()
@@ -22,40 +23,70 @@ public class ItemBehavior : MonoBehaviour
         GameObject player = other.gameObject;
         GameObject item = gameObject.transform.parent.gameObject;
         string x = item.name;
+        playerInventory = player.GetComponent<PlayerInventory>();
 
         if (player.CompareTag("Player"))
         {
             if (x.StartsWith("SpeedItem"))
             {
-                player.GetComponent<PlayerInventory>().bootsSpeed++;
+                playerInventory.bootsSpeed++;
                 Destroy(item);
             }
             else if (x.StartsWith("JumpItem"))
             {
-                player.GetComponent<PlayerInventory>().jumpWings++;
+                playerInventory.jumpItem++;
                 Destroy(item);
             }
             else if (x.StartsWith("ASitem"))
             {
-                player.GetComponent<PlayerInventory>().atkSpeedItem++;
+                playerInventory.atkSpeedItem++;
                 Destroy(item);
             }
             else if (x.StartsWith("DefItem"))
             {
-                player.GetComponent<PlayerInventory>().defItem++;
+                playerInventory.defItem++;
                 Destroy(item);
             }
             else if (x.StartsWith("ATKitem"))
             {
-                player.GetComponent<PlayerInventory>().atkItem++;
+                playerInventory.atkItem++;
                 Destroy(item);
             }
             else if (x.StartsWith("HPitem"))
             {
-                player.GetComponent<PlayerInventory>().hpItem++;
+                playerInventory.HpUp(1);
                 Destroy(item);
             }
-
+            else if (x.StartsWith("CritItem"))
+            {
+                playerInventory.critItem++;
+                Destroy(item);
+            }
+            else if (x.StartsWith("LifeStealItem"))
+            {
+                playerInventory.lifeStealItem++;
+                Destroy(item);
+            }
+            else if (x.StartsWith("DoubleDropItem"))
+            {
+                playerInventory.doubleDropItem++;
+                Destroy(item);
+            }
+            else if (x.StartsWith("JetPackItem"))
+            {
+                playerInventory.jetPackItem++;
+                Destroy(item);
+            }
+            else if (x.StartsWith("DoubleHPItem"))
+            {
+                playerInventory.HpUp(2);
+                Destroy(item);
+            }
+            else if (x.StartsWith("CritHealItem"))
+            {
+                playerInventory.critHealItem++;
+                Destroy(item);
+            }
 
         }
     }

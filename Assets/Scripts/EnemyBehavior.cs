@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    public PlayerInventory playerStats;
+    public GameObject damagePopUp;
 
     [Header("Stats")]
     public float enemyHP;
@@ -28,16 +30,17 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (enemyHP <= 0)
         {
-            gameObject.GetComponent<EnemyDropitem>().DropItem();
+            gameObject.GetComponent<EnemyDropitem>().DropItem(playerStats.doubleDropItem);
             Destroy(gameObject);
         }
     }
 
-    public void Hitted(float value)
+    public void Hitted(float value,bool crit)
     {
         float damageTaken = value - enemyArmor;
         enemyHP -= damageTaken;
         healthBar.UpdateHealthBar(enemyHP, enemyMaxHP);
+        damagePopUp.GetComponent<DamagePopUp>().Create(healthBar.transform, value, crit) ;
         print(enemyHP);
 
     }

@@ -14,6 +14,8 @@ public class PlayerAttack : MonoBehaviour
     public PlayerMovement player;
     public PlayerInventory playerStats;
 
+    private GameObject parent;
+
 
 
     // Update is called once per frame
@@ -34,7 +36,8 @@ public class PlayerAttack : MonoBehaviour
                                         Quaternion.identity);
 
                 //bullet.GetComponent<HittingEnemies>().playerStats = playerStats;
-
+                parent = GameObject.Find("Temporary");
+                bullet.transform.parent=parent.transform;
                 // Adds velocity to the bullet
                 bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
                 Destroy(bullet, 1f);

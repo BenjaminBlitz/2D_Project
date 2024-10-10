@@ -195,9 +195,17 @@ MonoBehaviour:
   - {fileID: 2937272790670222324, guid: b76ee6b82ff579d47a2322e63c89fccd, type: 3}
   - {fileID: 7996067525080452920, guid: 09a5688f18593614f82bfeb8f5c46986, type: 3}
   - {fileID: 7996067525080452920, guid: 74df192441804834d92f904ababd7df9, type: 3}
+  - {fileID: 7996067525080452920, guid: 959bbcc75f0a388478a8f2202d2b4472, type: 3}
   rareItems:
   - {fileID: 5834258506691001312, guid: 545b34a852dbc264e888f32d145ffdb2, type: 3}
   - {fileID: 5834258506691001312, guid: 9834ebb36e55a6a4eb538174962a9719, type: 3}
+  - {fileID: 5834258506691001312, guid: 66b28b0b76c83d64f8e7321abcd1bca0, type: 3}
+  reallyRareItems:
+  - {fileID: 5834258506691001312, guid: 002bfb65f67eeea4690a3ac2df4cc8f4, type: 3}
+  - {fileID: 5834258506691001312, guid: 6174f253f7beef143b5c5c2e1669b829, type: 3}
+  - {fileID: 5834258506691001312, guid: 6f7e5a6f1ccaea848a5726eaebf0d9ad, type: 3}
+  legendaryItems:
+  - {fileID: 7996067525080452920, guid: cfcf258bf2dc0af4eacd956c35ba74a7, type: 3}
 --- !u!114 &429263671906411503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d06327103269046a43a655cb69a66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 0}
+  damagePopUp: {fileID: 6236187544726304410, guid: d15e4774d74fe684e82aa27b01ec0198, type: 3}
   enemyHP: 0
   enemyMaxHP: 50
   enemyArmor: 0

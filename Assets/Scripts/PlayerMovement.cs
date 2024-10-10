@@ -24,18 +24,27 @@ public class PlayerMovement : MonoBehaviour
     public Transform lookDirection;
 
     [Header("Jump")]
-    public float jumpForce;
+    //public float jumpForce;
     public LayerMask groundLayer;
     public LayerMask groundLayerDrop;
     public LayerMask enemyLayer;
     private bool isGrounded;
     public Transform feetPosition;
     public float groundCheckCircle;
-    public float jumpTimer = 0.2f;
-    public float jumpTimeCounter;
+
     private bool isJumping;
     private bool canJump;
     private bool isFalling;
+    public float jumpHoldForce = 7f;
+    public float jumpHoldDuration = 0.2f;
+    public float maxJumpVelocity = 10f;
+    public float airFriction = 0.5f;
+    //public LayerMask groundLayer;
+
+    //private Rigidbody2D playerRb;
+    //private bool isGrounded;
+    private bool jumpPressed;
+    private float jumpTime;
 
 
 
@@ -108,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
 
 
             playerInventory = GetComponent<PlayerInventory>();
-            jumpTimer = (0.2f + (0.025f * playerInventory.jumpWings));
+            
 
             // Left Right Movement flip sprite and change look direction
             input = Input.GetAxisRaw("Horizontal");
@@ -146,22 +155,38 @@ public class PlayerMovement : MonoBehaviour
             }
             else { myAnimation.SetBool("Run", false); }
 
-            // Jump 
+            //***************************************************************************** Jump 
             canJump = isGrounded || isWalled;
             isFalling = playerRb.velocity.y < (-(playerRb.gravityScale / 2));
-
+            jumpHoldDuration = (0.2f + (0.025f * playerInventory.jetPackItem));
+            maxJumpVelocity = 10f + (0.2f*playerInventory.jumpItem);
 
 
             isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer) ||
             Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayerDrop) ||
             Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, enemyLayer);
 
+
+            if (Input.GetKeyDown(KeyCode.Space) && canJump)
+            {
+                jumpPressed = true;
+                jumpTime = Time.time;
+                isJumping = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                jumpPressed = false;
+            }
+
+            /*
             if (canJump && Input.GetButtonDown("Jump"))
             {
                 isJumping = true;
                 //myAnimation.SetBool("Jump", true);
                 jumpTimeCounter = jumpTimer;
-                playerRb.velocity = Vector2.up * playerInventory.playerJumpForce;
+                playerRb.AddForce(Vector2.up * playerInventory.playerJumpForce);
+                //playerRb.velocity = Vector2.up * playerInventory.playerJumpForce;
 
             }
 
@@ -169,7 +194,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (jumpTimeCounter > 0)
                 {
-                    playerRb.velocity = Vector2.up * playerInventory.playerJumpForce;
+                    playerRb.AddForce(Vector2.up * playerInventory.playerJumpForce);
+                    //playerRb.velocity = Vector2.up * playerInventory.playerJumpForce;
                     jumpTimeCounter -= Time.deltaTime;
 
 
@@ -186,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
 
             }
 
-
+            */
             /**********************************************************************************************/
 
             // Walljump
@@ -197,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
                 Physics2D.OverlapArea(lwallTop.position, lwallBot.position, groundLayer)) && !isGrounded && !isJumping)
             {
                 isWalled = true;
-                jumpTimeCounter = jumpTimer;
+                //jumpTimeCounter = jumpTimer;
                 playerRb.velocity = Vector2.down * (playerRb.gravityScale / 2.5f);
             }
             else
@@ -222,7 +248,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-                /********************************** **************************/
+        /********************************** **************************/
+
 
     }
     void FixedUpdate()
@@ -230,6 +257,34 @@ public class PlayerMovement : MonoBehaviour
         //if (isDashing) { print("caca"); }
         if (isDashing) { return; }
 
+        //jump
+        if (jumpPressed && (Time.time - jumpTime) < jumpHoldDuration)
+        {
+            playerRb.AddForce(Vector2.up * (playerInventory.playerJumpForce - 3), ForceMode2D.Impulse);
+        }
+        else if (canJump && jumpPressed && isJumping)
+        {
+            playerRb.AddForce(Vector2.up * playerInventory.playerJumpForce, ForceMode2D.Impulse);
+        }
+
+        // Limiter la vitesse verticale maximale
+        if (playerRb.velocity.y > maxJumpVelocity)
+        {
+            playerRb.velocity = new Vector2(playerRb.velocity.x, maxJumpVelocity);
+        }
+
+        // Appliquer une friction aérienne
+        if (!isGrounded)
+        {
+            playerRb.velocity -= new Vector2(0f, airFriction * Time.deltaTime);
+        }
+        // Réinitialiser l'état de saut si le joueur est revenu au sol
+        if (isGrounded && isJumping)
+        {
+            isJumping = false;
+        }
+
+        //crouch
         if (!isCrouching)
         {
             playerInventory.playerSpeed = (baseSpeed + (0.05f * playerInventory.bootsSpeed) * baseSpeed);
