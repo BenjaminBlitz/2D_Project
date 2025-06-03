@@ -191,7 +191,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Toad_Damage_0: -2692136353421197109
+      Toad_Damage_1: 8979374140267752649
+      Toad_Damage_2: -3278069209369788572
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

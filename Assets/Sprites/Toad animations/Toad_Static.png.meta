@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Toad_Static_0: 4115596211513638427
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

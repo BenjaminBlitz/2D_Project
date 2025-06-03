@@ -215,7 +215,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Toad_Walk_0: 8365485369471376363
+      Toad_Walk_1: -1966228675528653892
+      Toad_Walk_2: 3048783025015806282
+      Toad_Walk_3: 9136504258773488153
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
